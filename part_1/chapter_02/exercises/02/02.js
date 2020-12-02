@@ -29,4 +29,3 @@ function fizzBuzz2() {
 }
 
 fizzBuzz2();
-
