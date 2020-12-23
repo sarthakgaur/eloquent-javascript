@@ -26,11 +26,11 @@ function buildGraph(edges) {
   return graph;
 }
 
-const roadGraph = buildGraph(roads);
+export const roadGraph = buildGraph(roads);
 
 /* The Task */
 
-class VillageState {
+export class VillageState {
   constructor(place, parcels) {
     this.place = place;
     this.parcels = parcels;
@@ -71,7 +71,7 @@ function persistentData() {
 
 /* Simulation */
 
-function runRobot(state, robot, memory) {
+export function runRobot(state, robot, memory) {
   for (let turn = 0; ; turn++) {
     if (state.parcels.length == 0) {
       console.log(`Done in ${turn} turns`);
@@ -89,7 +89,7 @@ function randomPick(array) {
   return array[choice];
 }
 
-function randomRobot(state) {
+export function randomRobot(state) {
   return { direction: randomPick(roadGraph[state.place]) };
 }
 
@@ -112,14 +112,14 @@ function simulation() {
 
 /* The Mail Truck's Route */
 
-const mailRoute = [
+export const mailRoute = [
   "Alice's House", "Cabin", "Alice's House", "Bob's House",
   "Town Hall", "Daria's House", "Ernie's House",
   "Grete's House", "Shop", "Grete's House", "Farm",
   "Marketplace", "Post Office"
 ];
 
-function routeRobot(state, memory) {
+export function routeRobot(state, memory) {
   if (memory.length == 0) {
     memory = mailRoute;
   }
@@ -128,7 +128,7 @@ function routeRobot(state, memory) {
 
 /* Pathfinding */
 
-function findRoute(graph, from, to) {
+export function findRoute(graph, from, to) {
   let work = [{ at: from, route: [] }];
   for (let i = 0; i < work.length; i++) {
     let { at, route } = work[i];
@@ -141,7 +141,7 @@ function findRoute(graph, from, to) {
   }
 }
 
-function goalOrientedRobot({ place, parcels }, route) {
+export function goalOrientedRobot({ place, parcels }, route) {
   if (route.length == 0) {
     let parcel = parcels[0];
     if (parcel.place != place) {
@@ -156,15 +156,3 @@ function goalOrientedRobot({ place, parcels }, route) {
 // villageStateTest();
 // persistentData();
 // simulation();
-
-const exports = {
-  VillageState,
-  runRobot,
-  roadGraph,
-  mailRoute,
-  randomRobot,
-  routeRobot,
-  goalOrientedRobot,
-};
-
-export default exports;
