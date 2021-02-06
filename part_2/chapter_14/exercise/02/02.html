@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Elements by Tag Name</title>
+</head>
+
+<body>
+  <h1>Heading with a <span>span</span> element.</h1>
+  <p>A paragraph with <span>one</span>, <span>two</span>
+    spans.</p>
+
+  <script>
+    function byTagName(node, tagName) {
+      let nodes = [];
+      for (let i = 0; i < node.children.length; i++) {
+        let childNode = node.children[i];
+        if (childNode.nodeName.toLowerCase() === tagName.toLowerCase()) {
+          nodes.push(childNode);
+        }
+        nodes = nodes.concat(byTagName(childNode, tagName));
+      }
+      return nodes;
+    }
+
+    console.log(byTagName(document.body, "h1").length);
+    // → 1
+    console.log(byTagName(document.body, "span").length);
+    // → 3
+    let para = document.querySelector("p");
+    console.log(byTagName(para, "span").length);
+    // → 2
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>Build a table</title>
+  <meta charset="utf-8">
+  <style>
+    #mountains-table,
+    #mountains-table th,
+    #mountains-table td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Mountains</h1>
+
+  <div id="mountains"></div>
+
+  <script>
+    const MOUNTAINS = [
+      { name: "Kilimanjaro", height: 5895, place: "Tanzania" },
+      { name: "Everest", height: 8848, place: "Nepal" },
+      { name: "Mount Fuji", height: 3776, place: "Japan" },
+      { name: "Vaalserberg", height: 323, place: "Netherlands" },
+      { name: "Denali", height: 6168, place: "United States" },
+      { name: "Popocatepetl", height: 5465, place: "Mexico" },
+      { name: "Mont Blanc", height: 4808, place: "Italy/France" }
+    ];
+
+    function isNumeric(str) {
+      if (typeof str != "string") {
+        return false;
+      }
+      return !isNaN(str) && !isNaN(parseFloat(str));
+    }
+
+    function buildTable() {
+      let table = document.createElement('table');
+      table.id = 'mountains-table';
+
+      let headerRow = document.createElement('tr'); 
+      let first = MOUNTAINS[0];
+      let headerKeys = Object.keys(first);
+
+      // Add header cells
+      for (let key of headerKeys) {
+        let headerCell = document.createElement('th');
+        headerCell.textContent = key;
+        headerRow.appendChild(headerCell);
+      }
+      table.appendChild(headerRow);
+
+      // Add table rows
+      for (let mountain of MOUNTAINS) {
+        let row = document.createElement('tr');
+        let keys = Object.keys(mountain);
+        for (let key of keys) {
+          let cell = document.createElement('td');
+          cell.textContent = mountain[key];
+          if (isNumeric(cell.textContent)) {
+            cell.style.textAlign = 'right';
+          }
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+
+      document.getElementById('mountains').appendChild(table);
+    }
+
+    buildTable();
+  </script>
+</body>
+
+</html>
