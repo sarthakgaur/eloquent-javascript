@@ -1,0 +1,59 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .activeButton {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <tab-panel>
+    <div data-tabname="one">Tab one</div>
+    <div data-tabname="two">Tab two</div>
+    <div data-tabname="three">Tab three</div>
+  </tab-panel>
+  <script>
+    function asTabs(node) {
+      let nodeChildren = node.children;
+
+      let wrapper = document.createElement("div");
+      let buttonsContainer = document.createElement("div");
+
+      document.body.appendChild(wrapper);
+      wrapper.appendChild(buttonsContainer);
+      wrapper.appendChild(node);
+
+      let lastChildIndex = null;
+
+      function viewChild(childIndex) {
+        if (lastChildIndex !== null) {
+          let lastChild = nodeChildren[lastChildIndex]
+          let lastActiveButton = buttonsContainer.children[lastChildIndex];
+          lastChild.style.display = "none";
+          lastActiveButton.classList.remove('activeButton');
+        }
+        let child = nodeChildren[childIndex];
+        let activeButton = buttonsContainer.children[childIndex];
+        child.style.display = "";
+        activeButton.classList.add('activeButton');
+        lastChildIndex = childIndex;
+      }
+
+      for (let i = 0; i < nodeChildren.length; i++) {
+        let button = document.createElement("button");
+        button.textContent = nodeChildren[i].getAttribute("data-tabname");
+        button.addEventListener("click", () => { viewChild(i) });
+        buttonsContainer.appendChild(button);
+        nodeChildren[i].style.display = "none";
+      }
+    }
+    asTabs(document.querySelector("tab-panel"));
+  </script>
+</body>
+
+</html>

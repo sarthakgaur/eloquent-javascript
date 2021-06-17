@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .trail {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      top: 0;
+      left: 0;
+      background: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="trail"></div>
+  <div class="trail"></div>
+  <div class="trail"></div>
+  <div class="trail"></div>
+  <div class="trail"></div>
+  <script>
+    let mousePositions = [
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+    ];
+
+    function addPosition(x, y) {
+      mousePositions.unshift({ x, y });
+      if (mousePositions.length > 5) {
+        mousePositions.splice(5, 1);
+      }
+    }
+
+    window.addEventListener("mousemove", event => {
+      let elements = document.querySelectorAll(".trail");
+      addPosition(event.clientX, event.clientY);
+      for (let i = 0; i < elements.length; i++) {
+        let elem = elements[i];
+        elem.style.left = mousePositions[i]['x'];
+        elem.style.top = mousePositions[i]['y'];
+      }
+    });
+  </script>
+</body>
+
+</html>

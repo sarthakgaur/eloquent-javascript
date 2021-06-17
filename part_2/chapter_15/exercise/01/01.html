@@ -1,0 +1,35 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>🎈</p>
+
+  <script>
+    function handleKeydown(event) {
+      let elem = document.querySelector("p");
+      let size = parseFloat(window.getComputedStyle(elem).fontSize);
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        if (size < 80) {
+          elem.style.fontSize = (size + 2) + "px";
+        } else {
+          elem.textContent = "💥";
+          window.removeEventListener("keydown", handleKeydown);
+        }
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        size = Math.max(6, size - 2);
+        elem.style.fontSize = size + "px";
+      }
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+  </script>
+</body>
+
+</html>
